@@ -1,0 +1,92 @@
+ol{
+    color: blue !important;
+    font-size: 15px !important;
+}
+
+ol li{
+    color: red ;
+    font-size: 105px;
+}
+
+/*p{*/
+/*    color: red ;*/
+/*    font-size: 150px;*/
+/*}*/
+
+#special{
+    color: blue ;
+    font-size: 15px;
+}
+
+.special1{
+    color: blue ;
+    font-size: 25px;
+}
+
+.date{
+    color: purple ;
+    font-size: 25px;
+}
+
+.author{
+    color: green ;
+    font-size: 25px;
+}
+
+.news{
+    color: blue ;
+    font-size: 25px;
+}
+
+
+a:link {
+    color: red;
+}
+
+/* visited link */
+a:visited {
+    color: purple;
+}
+
+/* mouse over link */
+a:hover {
+    color: green;
+}
+
+/* selected link */
+a:active {
+    color: blue;
+}
+
+.box1{
+    /*box-sizing: content-box;*/
+    /*padding: 10px;*/
+    /*width: 100px;*/
+    /*border: 10px solid red;*/
+    /*float: right;*/
+    display: inline;
+    /*width:7px;*/
+}
+
+.box2{
+    /*box-sizing: content-box;*/
+    /*padding: 10px;*/
+    /*width: 100px;*/
+    /*border: 10px solid red;*/
+    /*float: right;*/
+    display: inline;
+    position:fixed;
+    left:20px;
+    top:20px;
+}
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/*.item1{*/
+/*    display: flex;*/
+/*    flex-wrap: wrap;*/
+/*}*/

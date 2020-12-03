@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Hello React!</title>
+    <script src="https://unpkg.com/react@^16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.13.0/umd/react-dom.production.min.js"></script>
+    <!--    //这两个是react的库-->
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<!--    //这个是Babel的库-->
+</head>
+
+<body>
+<div id="root"></div>
+<div id="box"></div>
+<script type="text/babel">
+    // React code will go here
+    // create virtual dom element
+    const ele1 = React.createElement('h1', {className: 'box'}, 'hello react!');//创建element;
+
+    // JS expression
+    const a = 10;
+    const str = 'this is a str';
+    const arr = [ <p key='1'>first</p>, <p key='2'>second</p>, <p key='3'>third</p> ];
+
+    const arr1 = (//推荐这种写法jsx
+        <div>
+            <p key='1'>first</p>
+            <p key='2'>second</p>
+            <p key='3'>third</p>
+        </div>
+    )
+    //这就是jsx语法，arr中的每一个元素就相当于创建了三次18行;
+
+    const arr2 = ['apple', 'pear', 'berry'];
+    const res = arr2.map((item, index) => {
+        return <p key={index}>* {item} *</p>
+    });//map就是把arr2中的每一个item和他的index传进来，完成map中的逻辑并挨个输出;
+    //如果传的是一个回调函数，那么就会把这个回调函数作用在arr2的每一个item上，并返回输出结果
+
+
+    // JS function
+    function formatName(user) {
+        return user.firstName + ' ' + user.lastName;
+    }
+
+    const user = {
+        firstName: 'Harper',
+        lastName: 'Perez',
+    };
+    const element = <h1>Hello, {formatName(user)}!</h1>;
+    //大括号表示先不翻译，等user返回结果之后再输出结果
+    const element1 = React.createElement('h1', {className: 'box'}, `Hello, ${formatName(user)}`);
+    //这里是string template写法; 标签类型，className,内容
+
+
+
+    // use JavaScript function
+    function Hello(props) {//函数如果作为component首字母大写;
+        console.log(props);
+        return (
+            <div>
+                <p>hello react {props.obj.name}</p>
+                <p>hello react {props.obj.age}</p>
+            </div>
+        )
+    }
+
+    const person = {
+        name : 'Joe',
+        age : 10
+    }
+    //把创建好的element丢给ReactDom.render函数：
+    // render DOM
+    //ReactDOM.render( <Hello obj={person}/>, document.getElementById('root'));
+    //ReactDOM.render(element1, document.getElementById('root'));//这是把ele1这个element放到root id这个div标签里面然后显示；
+
+
+
+    // use ES6 class
+    class Hello2 extends React.Component {
+        constructor() {
+            super();
+            //define state
+            // this.state = {
+            //     a:100,
+            //     b:200
+            // }
+        }
+
+        state = {
+            a:100,
+            str : "abc",
+            size:20
+        }
+
+        render() {
+            console.log(this.props);
+            console.log(this.state.a);
+            const{a, str} = this.state;//结构以下state,
+            console.log(a);//然后就不需要this.
+            const {person:{name, age}} = this.props;
+            return <div>
+                <h1>hello react, {this.props.name}</h1>
+                <h1>hello react, {this.props.person.name}</h1>
+                hello react + {this.state.a}
+                <hr/>
+                hello {name}, age
+                <hr/>
+                <button onClick = {//点击之后的逻辑是一个函数，所以用arrow函数直接写在后面
+                    //也可以定义在外面;
+                    () =>{
+                        console.log("clicked")
+                        // this.state.a = this.state.a+10;
+                        // console.log(this.state.a);
+
+                         //this.setState({a:1000})//setState会触发render,才会在页面更改state的值;
+
+                        this.setState(preState => {
+                            console.log('prestate ->', preState);
+                            return{
+                                ...preState,
+                                a:preState.a+10
+                            }
+                        })
+                    }
+                }>click me</button>
+
+                <p style = {{fontSize: this.state.size}}>{str}</p>
+                <button
+                onClick = {
+                    () =>{
+                        this.setState(pre =>{//这里的pre代表preState;
+                            return {
+                                ...pre,
+                                size: pre.size+10
+                            }
+                        })
+                    }
+                }>click to grow</button>
+            </div>
+
+        }
+
+    }
+
+    class App extends React.Component{
+        state = {
+            a:'haha'
+        };
+
+        render(){
+            return <div>
+                <h1>{this.state.a}</h1>
+                <input type = "text"
+                       value = {this.state.a}
+                       onChange={
+                           (e) => {
+                               console.log(e.target);
+                               this.setState(
+                                   {a: e.target.value}
+                                   )
+                           }
+                       }
+                />
+            </div>
+        }
+    }
+    // virtual dom -- dom 虚拟dom和真实dom的对接
+    ReactDOM.render(//componenent实例化通过括号实现;类似于实例化这个 hello2这个类;
+        // <Hello2 name={'Lucy'} person = {{name:"zhao", age:"18"}}></Hello2>,//传值 key = name, value = Lucy
+        // document.getElementById('root')
+
+        <App />,
+        document.getElementById("box")
+    );
+
+
+</script>
+</body>
+</html>
